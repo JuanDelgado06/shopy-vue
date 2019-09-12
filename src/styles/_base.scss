@@ -1,0 +1,32 @@
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: $font-normal;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.45;
+    color: $c-color6;
+    background:  $gradient;
+    margin: 0;
+    padding: 0;
+}
+.app {
+  background:  $gradient;
+}
+.container {
+    margin: 0 auto;
+    width: 95%;
+    @media screen and (min-width: 764px) {
+      width: 100%;
+      max-width: 1000px;
+    }
+  }
+
+  a {
+    color: $c-default;
+    text-decoration: none;
+  }

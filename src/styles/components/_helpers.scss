@@ -1,0 +1,22 @@
+.t-center {
+    text-align: center;
+}
+.c-vue { 
+    color: $c-vue; 
+}
+.btn {
+    border: 2px solid $c-color6;
+    border-radius: 5px;
+    padding: 8px 18px;
+    margin-bottom: 10px;
+    font-size: 1.3rem;
+    transition: all .59s ease;
+    &:hover {
+        background: $c-color6;
+        color: $c-color4;
+    } 
+}
+
+.z-index {
+    z-index: 2;
+}
