@@ -1,13 +1,28 @@
 <template>
-  <q-layout class="master">
-    <img src="./assets/bracket.svg" alt="bracket" class="svg-1">
-    <img src="./assets/bracket.svg" alt="bracket" class="svg-2">
-    <img src="./assets/bracket.svg" alt="bracket" class="svg-3">
-    <img src="./assets/bracket.svg" alt="bracket" class="svg-4">
-    <Guest />
-    <router-view/>
-    <Footer />
-  </q-layout>
+    <div>
+      <q-layout class="master" >
+
+        <div v-if="$store.state.loaded">
+            <img src="./assets/bracket.svg" alt="bracket" class="svg-1">
+            <img src="./assets/bracket.svg" alt="bracket" class="svg-2">
+            <img src="./assets/bracket.svg" alt="bracket" class="svg-3">
+            <img src="./assets/bracket.svg" alt="bracket" class="svg-4">
+            <Guest />
+            <router-view/>
+            <Footer />  
+        </div>
+
+        <q-page-container  v-else class="flex flex-center justify-center all-view">
+            <div class="q-gutter-md row">
+                <q-spinner-hourglass  
+                  color="primary"
+                  size="10rem">
+                </q-spinner-hourglass >
+            </div>
+        </q-page-container>
+
+      </q-layout>
+    </div>
 </template>
 
 <script>
@@ -27,6 +42,9 @@ export default {
   .master {
     background: $gradient;
   } 
+  .all-view {
+    min-height: 100vh;
+  }
   %svg {
     position: absolute;
     z-index: 1;

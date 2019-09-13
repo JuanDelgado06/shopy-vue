@@ -20,6 +20,9 @@ import {
   QItem,
   QItemSection,
   QItemLabel,
+  QInnerLoading,
+  QSpinnerPuff,
+  QSpinnerHourglass,
   QForm,
   QInput,
   Notify
@@ -42,13 +45,16 @@ Vue.use(Quasar, {
     QItem,
     QItemSection,
     QItemLabel,
+    QInnerLoading,
+    QSpinnerPuff,
+    QSpinnerHourglass,
     QForm,
-    QInput
+    QInput,
   },
   directives: {
   },
   plugins: {
-    Notify
+    Notify,
   },
   lang: lang
  })
