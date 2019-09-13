@@ -5,6 +5,7 @@ import router from './router'
 import './registerServiceWorker'
 import './quasar'
 import Vuelidate from 'vuelidate'
+import {MediaQueries} from 'vue-media-queries';
 
 import firebase from 'firebase'
 import 'firebase/firestore'
@@ -21,6 +22,7 @@ import i18n from './config/i18n.js'
 import store from '@/store'
 
 Vue.use(Vuelidate)
+Vue.use(mediaQueries)
 
 Vue.config.productionTip = false
 

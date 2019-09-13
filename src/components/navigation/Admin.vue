@@ -19,12 +19,12 @@
       <!-- Desktop -->
         <q-btn v-if="$q.platform.is.desktop" push color="secondary" round icon="fas fa-home"  exat to="/"/>
         <q-toolbar-title >
-          <q-item-label class="t-logo t4">ShopyVue-Admi</q-item-label>
+          <q-item-label class="t-logo-desktop">ShopyVue-Admi</q-item-label>
         </q-toolbar-title>
 
-        <q-btn v-if="$q.platform.is.desktop" push color="secondary" class="item-nav-desktop" label="Administrar"  exact to="/login"/>
-        <q-btn v-if="$q.platform.is.desktop" push color="secondary" class="item-nav-desktop" label="Tienda"  exact to="/register"/>
-        <q-btn  @click="logout" v-if="$q.platform.is.desktop" push color="secondary" class="item-nav-desktop" label="Cerrar Sesión"/>
+        <q-btn v-if="$q.platform.is.desktop" push size="md" color="secondary" class="item-nav-desktop" label="Administrar"  exact to="/login"/>
+        <q-btn v-if="$q.platform.is.desktop" push size="md" color="secondary" class="item-nav-desktop" label="Tienda"  exact to="/register"/>
+        <q-btn  @click="logout" v-if="$q.platform.is.desktop" push size="md" color="secondary" class="item-nav-desktop" label="Cerrar Sesión"/>
       </q-toolbar>
     </q-header>
 
@@ -115,6 +115,13 @@ export default {
     color: $c-color6;
     font-weight: bold;
     font-family: $font-normal;
+  }
+  .t-logo-desktop {
+    @extend .t-logo;
+    font-size: 2rem;
+    @media screen and (min-width: 800px){
+      font-size: 3rem;
+    }
   }
   .title-mobile {
     color: $c-color6;
