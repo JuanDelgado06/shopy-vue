@@ -1,7 +1,7 @@
 <template>
     <div class="center-absolute container">
             <main class="form shadow-1 z-index">
-                <Auth 
+                <AuthLogin 
                     action = "login"
                     @process="login($event)"
                 />
@@ -10,22 +10,39 @@
 </template>
 
 <script>
-import Auth from './forms/Auth'
+import AuthLogin from './forms/AuthLogin'
 import {db} from '@/main'
     /* eslint-disable */
 export default {
     name: 'Login',
     components: {
-        Auth
+        AuthLogin
     },
     methods: {
         login (user) {
             this.$store.dispatch('firebaseLogin', user)
                 .then((data) => {
+                    // console.log(data.user.uid);
+                    let uidUser = data.user.uid
                     
-                }).catch((err) => {
-                    
-                });
+                    db.collection("users").doc(uidUser).onSnapshot( snapshot => {
+                        console.log(snapshot.data());
+                        this.$store.commit('setRole', snapshot.data().role)
+                        this.$router.push('/')
+                    } )
+                }).catch((error) => {
+                     this.message = error.message
+                    // eslint-disable-next-line
+                    console.log(this.message);
+                    this.$q.notify({
+                        color: 'negative', textColor: 'white',
+                        icon: 'fas fa-exclamation-circle',
+                        position: 'bottom-right',
+                        timeout: '2500',
+                        message: this.message,
+                        actions: [{ icon: 'close', color: 'white' }]
+                    })
+                })
         }
     }
 }
