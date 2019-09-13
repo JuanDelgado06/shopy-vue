@@ -7,7 +7,8 @@
             <img src="./assets/bracket.svg" alt="bracket" class="svg-2">
             <img src="./assets/bracket.svg" alt="bracket" class="svg-3">
             <img src="./assets/bracket.svg" alt="bracket" class="svg-4">
-            <Guest />
+            <GuestNavigation v-if="role === 'guest' "/>
+            <AdminNavigation v-if="role === 'admin' "/>
             <router-view/>
             <Footer />  
         </div>
@@ -26,13 +27,19 @@
 </template>
 
 <script>
-import Guest from './components/navigation/Guest'
+import GuestNavigation from './components/navigation/Guest'
+import AdminNavigation from './components/navigation/Admin'
 import Footer from './components/Footer'
+import {mapGetters} from 'vuex'
 export default {
   name: 'app',
   components : {
-    Guest,
+    GuestNavigation,
+    AdminNavigation,
     Footer
+  },
+  computed: {
+    ...mapGetters(['role'])
   }
 }
 </script>

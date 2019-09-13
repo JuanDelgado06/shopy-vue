@@ -58,6 +58,7 @@
 </template>
 
 <script>
+/* eslint-disable */
 import { required, email, sameAs, minLength, } from 'vuelidate/lib/validators'
 // import { setTimeout } from 'timers';
 // import { match } from 'minimatch';
