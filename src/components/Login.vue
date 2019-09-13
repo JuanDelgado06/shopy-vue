@@ -34,14 +34,34 @@ export default {
                      this.message = error.message
                     // eslint-disable-next-line
                     console.log(this.message);
-                    this.$q.notify({
-                        color: 'negative', textColor: 'white',
-                        icon: 'fas fa-exclamation-circle',
-                        position: 'bottom-right',
-                        timeout: '2500',
-                        message: this.message,
-                        actions: [{ icon: 'close', color: 'white' }]
-                    })
+                    if ( this.message == 'There is no user record corresponding to this identifier. The user may have been deleted.' ) {
+                            this.$q.notify({
+                            color: 'warning', textColor: 'black',
+                            icon: 'fas fa-exclamation-triangle',
+                            position: 'bottom-right',
+                            timeout: '3000',
+                            message: 'No estas registrado. Registrate para poder acceder',
+                            actions: [{ icon: 'close', color: 'black' }]
+                        })
+                    }   else if ( this.message == 'The password is invalid or the user does not have a password.' ) {
+                            this.$q.notify({
+                            color: 'negative', textColor: 'black',
+                            icon: 'fas fa-exclamation-triangle',
+                            position: 'bottom-right',
+                            timeout: '3000',
+                            message: 'Tu contraseña no es correcta',
+                            actions: [{ icon: 'close', color: 'black' }]
+                        })
+                    } else {
+                        this.$q.notify({
+                            color: 'negative', textColor: 'white',
+                            icon: 'fas fa-exclamation-circle',
+                            position: 'bottom-right',
+                            timeout: '2500',
+                            message: this.message,
+                            actions: [{ icon: 'close', color: 'white' }]
+                        })
+                    }
                 })
         }
     }

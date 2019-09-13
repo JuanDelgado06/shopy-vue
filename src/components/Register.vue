@@ -41,12 +41,12 @@ export default {
 
                 if ( this.message == 'The email address is already in use by another account.' ) {
                     this.$q.notify({
-                    color: 'negative', textColor: 'white',
+                    color: 'negative', textColor: 'black',
                     icon: 'fas fa-exclamation-triangle',
                     position: 'bottom-right',
                     timeout: '3000',
                     message: 'Este Correo ya esta en uso, inicia sesion',
-                    actions: [{ icon: 'close', color: 'white' }]
+                    actions: [{ icon: 'close', color: 'black' }]
                 })
                 } else {
                     this.$q.notify({
