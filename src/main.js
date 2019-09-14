@@ -5,7 +5,7 @@ import router from './router'
 import './registerServiceWorker'
 import './quasar'
 import Vuelidate from 'vuelidate'
-import {MediaQueries} from 'vue-media-queries';
+import vMediaQuery from 'v-media-query'
 
 import firebase from 'firebase'
 import 'firebase/firestore'
@@ -22,10 +22,7 @@ import i18n from './config/i18n.js'
 import store from '@/store'
 
 Vue.use(Vuelidate)
-
- //Añadiendo mediaqueries
-const mediaQueries = new MediaQueries();
-Vue.use(mediaQueries)
+Vue.use(vMediaQuery)
 
 Vue.config.productionTip = false
 
@@ -33,7 +30,6 @@ new Vue({
   router,
   i18n,
   store,
-  mediaQueries: mediaQueries,
   mounted() {
       firebase.auth().onAuthStateChanged(user => {
           // let uidUser = data.user.uid

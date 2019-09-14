@@ -9,7 +9,7 @@
           @click="toggleDrawer"
           aria-label="Menu"
           icon="menu"
-          v-if="$q.platform.is.mobile"
+          v-if="$mq.resize && $mq.below('600px')"
         />
       <div class="f-center "  v-if="$q.platform.is.mobile">
         <q-item to="/">
@@ -17,35 +17,33 @@
         </q-item>
       </div>
       <!-- Desktop -->
-        <q-btn v-if="$q.platform.is.desktop" push color="secondary" round icon="fas fa-home"  exat to="/"/>
-        <q-toolbar-title >
-          <q-item-label class="t-logo-desktop">ShopyVue-Admi</q-item-label>
+        <q-toolbar-title v-if="$q.platform.is.desktop">
+          <q-item-label class="t-logo-desktop">Admin-Vue</q-item-label>
         </q-toolbar-title>
 
-        <q-btn v-if="$resize && $mq.above(992)" push size="md" color="secondary" class="item-nav-desktop" label="Administrar"  exact to="/login"/>
-        <q-btn v-if="$q.platform.is.desktop" push size="md" color="secondary" class="item-nav-desktop" label="Tienda"  exact to="/register"/>
-        <q-btn  @click="logout" v-if="$q.platform.is.desktop" push size="md" color="secondary" class="item-nav-desktop" label="Cerrar Sesión"/>
+        <div class="navigation-button" v-if="$mq.resize && $mq.above('600px')">
+            <q-btn push size="md" color="secondary" class="item-nav-desktop" label="Administrar"  exact to="/login"/>
+            <q-btn push size="md" color="secondary" class="item-nav-desktop" label="Tienda"  exact to="/register"/>
+            <q-btn  @click="logout" v-if="$q.platform.is.desktop" size="md" outline color="secondary" class="item-nav-desktop" icon="fas fa-power-off" label="Cerrar Sesión"/>
+        </div>
       </q-toolbar>
     </q-header>
 
     <q-drawer
       v-model="leftDrawerOpen"
-      v-if="$q.platform.is.mobile"
+      v-if="$mq.resize && $mq.below('600px')"
       content-class="header hamburger"
-      @mouseover="miniState = false"
-      @mouseout="miniState = true"
       :width="250"
       :breakpoint="600"
-      :mini="miniState"
     >
-      <q-list class="t4 pointer uppercase">
-        <q-item-label to="/" v-if="$q.platform.is.mobile">
-          <h6 class="title-mobile">
+      <q-list class="uppercase hamburger-container">
+        <q-item-label to="/" class="title-mobile">
+          <h5 >
             <i class="fas fa-terminal"></i>
             ShopyVue 
             <i class="far fa-window-minimize"></i> 
-          </h6>
-        </q-item-label>
+          </h5>
+      </q-item-label>
 
         <q-item to="/" exact class="item-nav-mobile">
           <q-item-section avatar >
@@ -74,15 +72,12 @@
           </q-item-section>
         </q-item>
 
-        <q-item to="/register" exact class="item-nav-mobile">
-          <q-item-section avatar>
-            <q-icon name="fas fa-sign-in-alt" />
-          </q-item-section>
+        <q-item exact class="end">
           <q-item-section>
-            <q-item-label>Cerrar Sesión</q-item-label>
+              <q-btn  @click="logout" v-if="$q.platform.is.desktop" size="md" outline color="secondary" icon="fas fa-power-off" label="Cerrar Sesión"/>
           </q-item-section>
         </q-item>
-      </q-list>
+      </q-list> 
     </q-drawer>
   </div>
 </template>
@@ -118,31 +113,28 @@ export default {
   }
   .t-logo-desktop {
     @extend .t-logo;
-    font-size: 2rem;
+    font-size: 1.6rem;
+    @media screen and (min-width: 600px){
+      font-size: 2rem;
+    }
     @media screen and (min-width: 800px){
-      font-size: 3rem;
+      font-size: 2.5rem;
     }
   }
   .title-mobile {
     color: $c-color6;
     background: $c-color4;
-    margin: 0;
-    padding: 10px 0;
     text-align: center;
     font-family: $font-normal;
+    padding: 12px 0;
+    h5 {
+    margin: 0;
+    }
   }
   .item-nav-mobile {
     border-bottom: 2px solid $c-color3;
     font-family: $font-normal;
-  }
-  .item-nav-desktop {
-    margin: 0 .5rem;
-    font-size: 1.3rem;
-    font-weight: bold;
-    font-family: $font-normal;
-  }
-  .icon-home {
-    color: $c-vue;
+    font-size: 1.5rem;
   }
   .uppercase {
     text-transform: uppercase;
