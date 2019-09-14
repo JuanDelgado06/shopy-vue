@@ -22,7 +22,7 @@
           <q-item-label class="t-logo-desktop">ShopyVue-Admi</q-item-label>
         </q-toolbar-title>
 
-        <q-btn v-if="$q.platform.is.desktop" push size="md" color="secondary" class="item-nav-desktop" label="Administrar"  exact to="/login"/>
+        <q-btn v-if="$resize && $mq.above(992)" push size="md" color="secondary" class="item-nav-desktop" label="Administrar"  exact to="/login"/>
         <q-btn v-if="$q.platform.is.desktop" push size="md" color="secondary" class="item-nav-desktop" label="Tienda"  exact to="/register"/>
         <q-btn  @click="logout" v-if="$q.platform.is.desktop" push size="md" color="secondary" class="item-nav-desktop" label="Cerrar Sesión"/>
       </q-toolbar>
