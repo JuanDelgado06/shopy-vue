@@ -3,12 +3,9 @@
       <q-layout class="master" >
 
         <div v-if="$store.state.loaded">
-            <img src="./assets/bracket.svg" alt="bracket" class="svg-1">
-            <img src="./assets/bracket.svg" alt="bracket" class="svg-2">
-            <img src="./assets/bracket.svg" alt="bracket" class="svg-3">
-            <img src="./assets/bracket.svg" alt="bracket" class="svg-4">
             <GuestNavigation v-if="role === 'guest' "/>
             <AdminNavigation v-if="role === 'admin' "/>
+            <!-- <brackets /> -->
             <router-view/>
             <Footer />  
         </div>
@@ -16,7 +13,7 @@
         <q-page-container  v-else class="flex flex-center justify-center all-view">
             <div class="q-gutter-md row">
                 <q-spinner-hourglass  
-                  color="primary"
+                  color="accent"
                   size="10rem">
                 </q-spinner-hourglass >
             </div>
@@ -31,12 +28,14 @@ import GuestNavigation from './components/navigation/Guest'
 import AdminNavigation from './components/navigation/Admin'
 import Footer from './components/Footer'
 import {mapGetters} from 'vuex'
+import brackets from './styles/Brackets'
 export default {
   name: 'app',
   components : {
     GuestNavigation,
     AdminNavigation,
-    Footer
+    Footer,
+    brackets
   },
   computed: {
     ...mapGetters(['role'])
@@ -51,34 +50,5 @@ export default {
   } 
   .all-view {
     min-height: 100vh;
-  }
-  %svg {
-    position: absolute;
-    z-index: 1;
-    width: 18%;
-  }
-  .svg-1 {
-    @extend %svg;
-    top: 10%;
-    right: 10%;
-    transform: rotate(-5deg);
-}
-  .svg-2 {
-    @extend %svg;
-    bottom: 10%;
-    left: 10%;
-    transform: rotate(-5deg);
-  }
-  .svg-3 {
-    @extend %svg;
-    top: 10%;
-    left: 10%;
-    transform: rotate(5deg);
-  }
-  .svg-4 {
-    @extend %svg;
-    bottom: 10%;
-    right: 10%;
-    transform: rotate(5deg);
   }
 </style>

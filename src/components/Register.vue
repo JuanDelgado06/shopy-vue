@@ -54,7 +54,7 @@ export default {
                         icon: 'fas fa-exclamation-circle',
                         position: 'bottom-right',
                         timeout: '2500',
-                        message: this.message,
+                        message: /* this.message */ 'Revisa el Formulario' ,
                         actions: [{ icon: 'close', color: 'white' }]
                     })
                 }

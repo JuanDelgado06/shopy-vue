@@ -33,15 +33,12 @@ new Vue({
   mounted() {
       firebase.auth().onAuthStateChanged(user => {
           // let uidUser = data.user.uid
-          
           if (user) {
-              console.log("funciona");
+            //   console.log("funciona");
               db.collection("users").doc(user.uid).onSnapshot( snapshot => {
-                  console.log("Todo salio bien con el uid");
                   store.commit('setUser', user)
 
                   if ( snapshot.exists ) {
-                    console.log('Existe el usuario');
                     store.commit('setRole', snapshot.data().role)
                   } 
                   store.commit('setLoaded', true)

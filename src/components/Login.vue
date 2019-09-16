@@ -26,7 +26,7 @@ export default {
                     let uidUser = data.user.uid
                     
                     db.collection("users").doc(uidUser).onSnapshot( snapshot => {
-                        console.log(snapshot.data());
+                        // console.log(snapshot.data());
                         // this.$store.commit('setRole', snapshot.data().role)
                         this.$router.push('/')
                     } )

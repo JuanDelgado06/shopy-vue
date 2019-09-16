@@ -9,21 +9,26 @@
           @click="toggleDrawer"
           aria-label="Menu"
           icon="menu"
-          v-if="$mq.resize && $mq.below('600px')"
+          v-if="$mq.resize && $mq.below('629px')"
         />
-      <div class="f-center "  v-if="$q.platform.is.mobile">
+      <!-- <div class="f-center "  v-if="$q.platform.is.mobile">
         <q-item to="/">
           <q-item-label class="t-logo t3">ShopyVue</q-item-label>
         </q-item>
-      </div>
+      </div> -->
+      <q-toolbar-title v-if="$mq.resize && $mq.below('629px')" align="center">
+          <q-item-label class="t-logo-desktop">Admin-Vue</q-item-label>
+        </q-toolbar-title>
       <!-- Desktop -->
-        <q-toolbar-title >
-          <q-item-label class="t-logo-desktop">ShopyVue</q-item-label>
+        <q-btn v-if="$mq.resize && $mq.above('630px')" exat to="/"
+          class="q-pa-xs" color="primary" flat icon="fas fa-home" />
+        <q-toolbar-title v-if="$mq.resize && $mq.above('630px')">
+          <q-item-label class="t-logo-desktop">Admin-Vue</q-item-label>
         </q-toolbar-title>
 
-       <div class="navigation-button" v-if="$mq.resize && $mq.above('600px')">
-            <q-btn push size="md" color="secondary" class="item-nav-desktop" label="Iniciar Sesión"  exact to="/login"/>
-            <q-btn push size="md" color="secondary" class="item-nav-desktop" label="Registrarse"  exact to="/register"/>
+       <div class="navigation-button" v-if="$mq.resize && $mq.above('630px')">
+            <q-btn size="md" outline color="primary" class="item-nav-desktop" label="Iniciar Sesión"  exact to="/login"/>
+            <q-btn size="md" outline color="accent" class="item-nav-desktop q-ml-sm" label="Registrarse"  exact to="/register"/>
         </div>
 
       </q-toolbar>
@@ -31,13 +36,13 @@
 
     <q-drawer
       v-model="leftDrawerOpen"
-      v-if="$mq.resize && $mq.below('600px')"
-      content-class="header hamburger"
+      v-if="$mq.resize && $mq.below('629px')"
+      content-class="hamburger"
       :width="250"
       :breakpoint="600"
     >
       <q-list class="uppercase">
-        <q-item-label to="/" class="title-mobile">
+        <q-item-label to="/" class="title-mobile" v-if="$mq.resize && $mq.below('600px')">
           <h5 >
             <i class="fas fa-terminal"></i>
             ShopyVue 
@@ -98,7 +103,8 @@ export default {
     color: $c-color6;
   }
   .hamburger {
-    border-right: 2px solid $c-color4;
+    background: $c-color3;
+    border-right: 2px solid $c-color3;
   }
   .t-logo {
     color: $c-color6;
@@ -108,7 +114,7 @@ export default {
   .t-logo-desktop {
     @extend .t-logo;
     font-size: 1.6rem;
-    @media screen and (min-width: 600px){
+    @media screen and (min-width: 630px){
       font-size: 2rem;
     }
     @media screen and (min-width: 800px){
@@ -126,17 +132,10 @@ export default {
     }
   }
   .item-nav-mobile {
-    border-bottom: 2px solid $c-color3;
     font-family: $font-normal;
-  }
-  .item-nav-desktop {
-    margin: 0 .5rem;
-    font-size: 1.3rem;
-    font-weight: bold;
-    font-family: $font-normal;
-  }
-  .icon-home {
-    color: $c-vue;
+    text-transform: capitalize;
+    font-size: 1.5rem;
+    font-weight: normal;
   }
   .uppercase {
     text-transform: uppercase;

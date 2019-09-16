@@ -32,8 +32,8 @@
       </q-input>
 
       <div>
-        <q-btn label="Enviar" type="submit" color="secondary" @click="submit" :disable="!valid"  size="1rem"/>
-        <q-btn label="Reset" type="reset" color="secondary" outline class="q-ml-sm"  size="1rem" />
+        <q-btn label="Enviar" type="submit" color="accent" outline @click="submit" size="1rem"/>
+        <q-btn label="Reset" type="reset" color="primary" outline class="q-ml-sm"  size="1rem" />
       </div>
     </q-form>
 
@@ -91,24 +91,27 @@ export default {
   methods: {
     submit () {
       this.$v.$touch()
-        if (this.$v.$invalid) {
-          // eslint-disable-next-line
-          console.log('Error con el formulario pero funciona bien el plugin vuelidate');
-          this.submitStatus = 'ERROR'
-        } 
-        else {
-          // eslint-disable-next-line
-          console.log('enviado');
+        console.log('enviado');
           this.submitStatus = 'OK'
           this.$emit('process', {email: this.email, password: this.password})
-        }
+        // if (this.$v.$invalid) {
+        //   // eslint-disable-next-line
+        //   console.log('Error con el formulario pero funciona bien el plugin vuelidate');
+        //   this.submitStatus = 'ERROR'
+        // } 
+        // else {
+        //   // eslint-disable-next-line
+        //   console.log('enviado');
+        //   this.submitStatus = 'OK'
+        //   this.$emit('process', {email: this.email, password: this.password})
+        // }
       },
     onReset () {
       this.email = ''
       this.password = ''
       this.password_confirmation =  ''
       this.$q.notify({
-          color: 'secondary', textColor: 'white',
+          color: 'primary', textColor: 'white',
           icon: 'fas fa-broom',
           position: 'bottom-right',
           timeout: '2500',

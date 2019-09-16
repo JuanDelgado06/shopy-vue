@@ -33,6 +33,13 @@ const router =  new Router({
       meta: { Auth: false, title: 'Ingresar'},
       beforeEnter: (to, from, next) => beforeEnter(to, from, next)
     },
+    { path: '/admin', name: 'admin', 
+      component: () => import('./components/administrations/AdminHome'),
+      meta: { Auth: true, title: 'Administracion', role: 'admin' },
+      children: [
+        
+      ]
+    },
     {path: '*',component: Error404}
   ]
 })
