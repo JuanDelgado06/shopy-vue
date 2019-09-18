@@ -28,14 +28,12 @@ import GuestNavigation from './components/navigation/Guest'
 import AdminNavigation from './components/navigation/Admin'
 import Footer from './components/Footer'
 import {mapGetters} from 'vuex'
-import brackets from './styles/Brackets'
 export default {
   name: 'app',
   components : {
     GuestNavigation,
     AdminNavigation,
-    Footer,
-    brackets
+    Footer
   },
   computed: {
     ...mapGetters(['role'])

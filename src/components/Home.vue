@@ -11,7 +11,7 @@
                     Encuentra todo lo que necesitas saber sobre Vue.js el Framework Progresivo de la comunidad
                 </p>
                 <div class="t-center container-btn ">
-                    <router-link to="/register" class="btn shadow-24">Ver Más</router-link>
+                    <router-link to="/login" class="btn shadow-24">Ver Más</router-link>
                 </div>
             </q-page-container>
         </div>

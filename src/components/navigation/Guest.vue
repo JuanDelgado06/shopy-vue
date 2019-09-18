@@ -122,7 +122,7 @@ export default {
     }
   }
   .title-mobile {
-    color: $c-color6;
+    color: $c-color7;
     background: $c-color4;
     text-align: center;
     font-family: $font-normal;

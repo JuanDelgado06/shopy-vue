@@ -9,12 +9,20 @@ import {
   QLayout,
   QHeader,
   QFooter,
+  QCard,
+  QCardSection,
+  QCardActions,
   QDrawer,
+  QDialog,
   QPageContainer,
   QPage,
   QPageSticky,
   QToolbar,
   QToolbarTitle,
+  QTable,
+  QTh,
+  QTr,
+  QTd,
   QBtn,
   QList,
   QIcon,
@@ -26,6 +34,8 @@ import {
   QSpinnerHourglass,
   QForm,
   QInput,
+  AddressbarColor,
+  ClosePopup,
   Notify
 } from 'quasar'
 
@@ -35,12 +45,20 @@ Vue.use(Quasar, {
     QLayout,
     QHeader,
     QFooter,
+    QCard,
+    QCardSection,
+    QCardActions,
     QDrawer,
+    QDialog,
     QPageContainer,
     QPage,
     QPageSticky,
     QToolbar,
     QToolbarTitle,
+    QTable,
+    QTh,
+    QTr,
+    QTd,
     QBtn,
     QIcon,
     QList,
@@ -54,9 +72,14 @@ Vue.use(Quasar, {
     QInput,
   },
   directives: {
+    ClosePopup
   },
   plugins: {
-    Notify,
+    AddressbarColor,
+    Notify
   },
+  boot: [
+    'addressbar-color'
+  ],
   lang: lang
  })

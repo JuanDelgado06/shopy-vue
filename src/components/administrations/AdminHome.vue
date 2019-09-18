@@ -1,21 +1,27 @@
 <template>
-    <div>
+    <div >
         <q-page-container class="container">
-                <h1 class="t2 title">Administracion</h1>
-                <q-list class="menu-admin">
-                    <q-item 
-                            v-for="(item, index) in items" :key="index" :to="item.to"
-                            clickable
-                            v-ripple
-                            :active="link === 'inbox'"
-                            @click="link = 'inbox'"
-                        >
-                            <q-item-section avatar>
-                                <q-icon color="primary" :name="item.icon" />
-                            </q-item-section>
-                            <q-item-section> {{ item.title }} </q-item-section>
-                    </q-item>                
-                </q-list>
+                <h2 class="t3 title" v-if="$mq.resize && $mq.below('629px')">Administración</h2>
+                <h2 class="t2 title" v-else>Administración</h2>
+
+                <div class="admin-container">
+                    <q-list class="menu-admin">
+                        <q-item 
+                                v-for="(item, index) in items" :key="index" :to="item.to"
+                                clickable
+                            >
+                                <!-- v-ripple :active="link === 'inbox'" @click="link = 'inbox'" -->
+                                <q-item-section avatar>
+                                    <q-icon color="primary" :name="item.icon" />
+                                </q-item-section>
+                                <q-item-section> {{ item.title }} </q-item-section>
+                        </q-item>                
+                    </q-list>
+                    <div class="tabla-usuarios">
+                        <router-view/>
+                    </div>
+                </div>
+
         </q-page-container>
     </div>
 </template>
@@ -36,17 +42,18 @@ export default {
 
 <style lang="scss">
     @import '@/styles/master';
-    .z-html{
-        z-index: 999;
-    }
     .title {
         text-align: center;
         color: $c-color7;
     }
-    .menu-admin {
-        width: 100%;
+    .admin-container {
+        display: grid;
+        grid-template-columns: repeat(1, 1fr);
+
         @media screen and (min-width: 764px) {
-            width: 50%;
+            grid-template-columns: repeat(2,1fr);
+            grid-gap: 5px;
         }
     }
+
 </style>

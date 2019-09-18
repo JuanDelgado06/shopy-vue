@@ -37,7 +37,11 @@ const router =  new Router({
       component: () => import('./components/administrations/AdminHome'),
       meta: { Auth: true, title: 'Administracion', role: 'admin' },
       children: [
-        
+        {
+          path: 'users',
+          component: () => import('./components/administrations/AdminUsers'),
+          meta: { title: 'Administrar Usuarios'}
+        }
       ]
     },
     {path: '*',component: Error404}
