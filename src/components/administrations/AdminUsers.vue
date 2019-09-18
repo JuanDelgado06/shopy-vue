@@ -4,7 +4,7 @@
         <div class="table-container">
             <q-table
                 title="Usuarios"
-                :grid="$q.screen.lt.sm"
+                 :grid="$q.screen.lt.sm"
                 :data="users"
                 :columns="columns"
                 :loading="loading"
@@ -38,10 +38,10 @@
                             <div class="text-pre-wrap">{{ props.row.username }}</div>
                         </q-td>
                         <!-- <q-td key="acciones" :props="props"> -->
-                    <q-separator ></q-separator>
-              <q-card-section align="right">
-                  <q-btn flat icon="edit" color="primary" @click="editUser(props.row)" class="q-pa-xs"></q-btn>             
-                <q-btn flat icon="delete" color="accent" @click="removeUser(props.row)" class="q-pa-xs"></q-btn></q-card-section>
+                        <q-td>
+                             <q-btn flat icon="edit" color="primary" @click="editUser(props.row)" class="q-pa-xs"></q-btn>
+                             <q-btn flat icon="delete" color="accent" @click="removeUser(props.row)" class="q-pa-xs"></q-btn>
+                        </q-td>
                         </q-tr>
                 </template>
             </q-table>
