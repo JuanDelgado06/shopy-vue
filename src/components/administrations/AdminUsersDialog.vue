@@ -41,7 +41,7 @@
 import {db} from '@/main'
 import * as faker from 'faker'
 import {mapGetters} from 'vuex'
-import { timeout } from 'q'
+// import { timeout } from 'q'
 
 export default {
     name: 'AdminUsersDialog',
