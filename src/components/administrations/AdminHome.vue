@@ -17,9 +17,9 @@
                                 <q-item-section> {{ item.title }} </q-item-section>
                         </q-item>                
                     </q-list>
-                    <div class="tabla-usuarios">
+                    <q-page>
                         <router-view/>
-                    </div>
+                    </q-page>
                 </div>
 
         </q-page-container>
