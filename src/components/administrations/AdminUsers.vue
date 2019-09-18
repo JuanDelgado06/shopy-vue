@@ -1,51 +1,75 @@
 <template>
     <div>
         <AdminUsersDialog />
-        <div class="table-container">
+        <q-page-container>
             <q-table
-                title="Usuarios"
-                 :grid="$q.screen.lt.sm"
-                :data="users"
-                :columns="columns"
+                title="Usuarios" separator="vertical"
+                :dense="$q.screen.lt.md"    
+                :data="users" :columns="columns"
                 :loading="loading"
                 :filter="filter"
-                :rows-per-page-options="[1, 5, 10, 20, 30]"
-                no-data-label="No hay nada por aqui"
-                no-results-label="No econtramos tu busqueda"
+                :rows-per-page-options="[1, 2, 5, 10, 20, 30]"
+                no-data-label="No hay nada por aqui" no-results-label="No econtramos tu busqueda"
                 row-key="name"
-                bordered
                 dark color="accent"
                 class="table-master shadow-16" card-class="table-card" table-class="table-content" table-header-class="table-header"
                 >
 
-                <template v-slot:top-right>
+                <template v-slot:top-right="props">
                     <q-input outlined dense debounce="300" v-model="filter" placeholder="Buscar" dark>
-                    <template v-slot:append>
-                        <q-icon name="search" />
-                    </template>
-                    </q-input>
+                        <template v-slot:append>
+                            <q-icon name="search" />
+                        </template>
+                    </q-input>                        
+                    <q-btn
+                        flat round dense
+                        :icon="props.inFullscreen ? 'fullscreen_exit' : 'fullscreen'"
+                        @click="props.toggleFullscreen"
+                        class="q-ml-md"
+                        />                    
                 </template>
-                
+
                 <template v-slot:body="props">
                         <q-tr :props="props">
+
                         <q-td key="email" :props="props">
-                            {{ props.row.email }}
+                            <q-scroll-area
+                                v-if="$mq.resize && $mq.below('629px')"
+                                horizontal style="height: 50px; width: 100px;"
+                                :thumb-style="thumbStyle" :content-style="contentStyle" :content-active-style="contentActiveStyle" >          
+                                    <div class="text-wrap">{{ props.row.email }}</div>
+                            </q-scroll-area>   
+                            <div class="text-wrap" v-else>{{ props.row.email }}</div>
                         </q-td>
+
                         <q-td key="uid" :props="props">
-                            {{ props.row.uid }}
+                        <q-scroll-area
+                            v-if="$mq.resize && $mq.below('629px')"
+                            horizontal style="height: 50px; width: 70px;"
+                            :thumb-style="thumbStyle" :content-style="contentStyle" :content-active-style="contentActiveStyle" >                                      
+                                <div class="text-pre-wrap" >{{ props.row.uid.substr(0,8) }}</div> 
+                        </q-scroll-area>
+                        <div class="text-pre-wrap"  v-else>{{ props.row.uid.substr(0,12) }}</div> 
                         </q-td>
+                        
                         <q-td key="username" :props="props">
-                            <div class="text-pre-wrap">{{ props.row.username }}</div>
+                            <q-scroll-area
+                                v-if="$mq.resize && $mq.below('629px')"
+                                horizontal style="height: 50px; width: 70px;"  
+                                :thumb-style="thumbStyle" :content-style="contentStyle" :content-active-style="contentActiveStyle" >                                      
+                                    <div class="text-pre-wrap" >{{ props.row.username }}</div> 
+                            </q-scroll-area>
+                            <div class="text-pre-wrap"  v-else>{{ props.row.username }}</div> 
                         </q-td>
-                        <!-- <q-td key="acciones" :props="props"> -->
-                        <q-td>
+
+                        <q-td key="acciones" :props="props">
                              <q-btn flat icon="edit" color="primary" @click="editUser(props.row)" class="q-pa-xs"></q-btn>
                              <q-btn flat icon="delete" color="accent" @click="removeUser(props.row)" class="q-pa-xs"></q-btn>
                         </q-td>
                         </q-tr>
                 </template>
             </q-table>
-        </div>
+        </q-page-container>
     </div>
 </template>
 
@@ -60,17 +84,18 @@ export default {
       filter: '',
       columns: [
         {
-          name: 'email',
-          required: true,
-          label: 'Email',
-          align: 'center',
-          field: row => row.email,
-          format: val => `${val}`,
-          sortable: true
+            name: 'email',
+            required: true,
+            label: 'Email',
+            align: 'left', 
+            field: row => row.email,
+            format: val => `${val}`,
+            sortable: true,
+            classes: 'ellipsis', style: 'width: 80px'
         },
-        { name: 'uid', align: 'center', label: 'UID', field: 'uid', sortable: true },
-        { name: 'username', align: 'center', label: 'Nombre de Usuario', field: 'username', sortable: true },
-        { name: 'acciones', align: 'center', label: 'Acciones', field: 'acciones', sortable: false }
+        { name: 'uid', align: 'left', label: 'UID', field: 'uid', sortable: true, classes: 'ellipsis', style: 'width: 70px'},
+        { name: 'username', align: 'center', label: 'N-Usuario', field: 'username', sortable: true, classes: 'ellipsis', style: 'width: 70px'},
+        { name: 'acciones', align: 'center', label: 'Acciones', field: 'acciones', sortable: false , classes: 'ellipsis', style: 'width: 80px'}
       ],
       users: [ ],
       loading: false
@@ -99,6 +124,28 @@ export default {
 
       }
   },
+  computed: {
+    contentStyle () {
+      return {
+        color: '#d3d3d3'
+      }
+    },
+    contentActiveStyle () {
+      return {
+        // backgroundColor: '#eee',
+        color: '#d3d3d3'
+      }
+    },
+    thumbStyle () {
+      return {
+        right: '1px',
+        borderRadius: '5px',
+        backgroundColor: '#52C5F2',
+        width: '5px',
+        opacity: 0.75
+      }
+    }
+  }
 }
 </script>
 
@@ -108,10 +155,10 @@ export default {
         margin: 0;
     }
     .table-master {
-        width: 100%;
+        // width: 100%;
         background: #000f14;
         border-radius: 10px;
-        margin-top: 20px;
+        margin-top: 40px;
     }
     .table-card {
         margin: 5px;

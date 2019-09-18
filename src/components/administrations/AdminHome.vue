@@ -8,7 +8,7 @@
                     <q-list class="menu-admin">
                         <q-item 
                                 v-for="(item, index) in items" :key="index" :to="item.to"
-                                clickable
+                                clickable class="item-menu"
                             >
                                 <!-- v-ripple :active="link === 'inbox'" @click="link = 'inbox'" -->
                                 <q-item-section avatar>
@@ -32,8 +32,8 @@ export default {
     data () {
         return {
             items: [
-                { title: 'Usuarios', icon: 'home', to: 'admin/users' },
-                { title: 'Productos', icon: 'home', to: 'admin/products' }
+                { title: 'Usuarios', icon: 'fas fa-user-shield q-icon', to: 'admin/users' },
+                { title: 'Productos', icon: 'fas fa-store', to: 'admin/products' }
             ]
         }
     }
@@ -46,14 +46,15 @@ export default {
         text-align: center;
         color: $c-color7;
     }
+    .admin-nav {
+        display: flex;
+    }
     .admin-container {
         display: grid;
         grid-template-columns: repeat(1, 1fr);
-
-        @media screen and (min-width: 764px) {
-            grid-template-columns: repeat(2,1fr);
-            grid-gap: 5px;
-        }
     }
-
+    .menu-admin {
+        display: flex;
+        justify-content: space-around;
+    }
 </style>
