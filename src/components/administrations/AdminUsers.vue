@@ -1,30 +1,71 @@
 <template>
 <div id="q-app"> 
 <AdminUsersDialog />
-  <div class="q-pa-md">
+  <div >
       <q-table
-        title="Usuarios" 
+        title="Treats"
+        :data="users"
+        :columns="columns"
+        row-key="name"
         :dense="$q.screen.lt.sm"    
-        :data="users" :columns="columns"
-        :loading="loading"
-        :filter="filter"
+        :visible-columns="visibleColumns"
+        :filter="filter" :loading="loading"
         no-data-label="No hay nada por aqui" no-results-label="No econtramos tu busqueda"
-        row-key="name" 
         dark color="accent"
         class="table-master shadow-16" card-class="table-card" table-class="table-content" table-header-class="table-header"
       >
-        <template v-slot:top-right="props">
-            <q-input outlined dense debounce="300" v-model="filter" placeholder="Buscar" dark>
+        <template v-slot:top="props">
+          <div class="col-2 q-table__title">Usuarios</div>
+  
+          <q-space ></q-space>
+  
+          <div v-if="$q.screen.gt.xs" class="col">
+            <q-toggle v-model="visibleColumns" val="email" label="Email" color="primary" ></q-toggle>
+            <q-toggle v-model="visibleColumns" val="uid" label="UID" ></q-toggle>
+            <q-toggle v-model="visibleColumns" val="username" label="Usuario" ></q-toggle>
+            <q-toggle v-model="visibleColumns" val="acciones" label="Acciones" ></q-toggle>
+          </div>
+          <q-select
+            v-else
+            v-model="visibleColumns"
+            multiple
+            borderless
+            dense dark
+            options-dense
+            :display-value="$q.lang.table.columns"
+            emit-value
+            map-options
+            transition-show="scale" transition-hide="scale"
+            :options="columns"
+            option-value="name"
+            style="min-width: 150px"
+          >
+            <template v-slot:option="scope">
+              <q-item
+                v-bind="scope.itemProps"
+                v-on="scope.itemEvents"
+              >
+                <q-item-section avatar>
+                  <q-icon :name="scope.opt.icon" class="q-ml-sm"/>
+                </q-item-section>
+                <q-item-section>
+                  <q-item-label v-html="scope.opt.label" color="accent"/>
+                </q-item-section>
+              </q-item>
+            </template>
+          </q-select>
+
+         <q-input outlined dense debounce="300" v-model="filter" placeholder="Buscar" dark>
                 <template v-slot:append>
                     <q-icon name="search" />
                 </template>
-            </q-input>                        
-            <q-btn
-                flat round dense
-                :icon="props.inFullscreen ? 'fullscreen_exit' : 'fullscreen'"
-                @click="props.toggleFullscreen"
-                class="q-ml-md"
-                />                    
+          </q-input>         
+          <q-btn
+            flat round dense
+            :icon="props.inFullscreen ? 'fullscreen_exit' : 'fullscreen'"
+            @click="props.toggleFullscreen"
+            class="q-ml-md"
+          ></q-btn>
         </template>
         
         <template v-slot:body="props"> 
@@ -50,22 +91,31 @@
             <div class="text-pre-wrap"  v-else>{{ props.row.uid.substr(0,12) }}</div> 
           </q-td>
           
-      <q-td key="username" :props="props">
-        <q-scroll-area
-        v-if="$q.screen.lt.sm"
-        horizontal style="height: 50px; width: 70px;">
-            <div class="text-pre-wrap" >{{ props.row.username }}</div> 
-        </q-scroll-area>
-        <div class="text-pre-wrap"  v-else>{{ props.row.username }}</div> 
-      </q-td>     
+        <q-td key="username" :props="props">
+          <q-scroll-area
+          v-if="$q.screen.lt.sm"
+          horizontal style="height: 50px; width: 70px;">
+              <div class="text-pre-wrap" >{{ props.row.username }}</div> 
+          </q-scroll-area>
+          <div class="text-pre-wrap"  v-else>{{ props.row.username }}</div> 
+        </q-td>     
           
-      <q-td key="acciones" :props="props">
-        <q-btn flat icon="edit" color="primary" @click="editUser(props.row)" class="q-pa-xs"></q-btn>
-        <q-btn flat icon="delete" color="accent" @click="removeUser(props.row)" class="q-pa-xs"></q-btn>
-      </q-td>    
-      </q-tr>
-    </template>
-    
+        <q-td key="acciones" :props="props">
+            <q-scroll-area
+            v-if="$q.screen.lt.sm"
+            horizontal style="height: 50px; width: 70px;">
+                <q-btn flat icon="edit" color="primary" @click="editUser(props.row)" class="q-pa-xs"></q-btn>
+                <q-btn flat icon="delete" color="accent" @click="removeUser(props.row)" class="q-pa-xs"></q-btn>
+            </q-scroll-area>
+              <q-td key="acciones" :props="props"  v-else>
+                <q-btn flat icon="edit" color="primary" @click="editUser(props.row)" class="q-pa-xs"></q-btn>
+                <q-btn flat icon="delete" color="accent" @click="removeUser(props.row)" class="q-pa-xs"></q-btn>
+              </q-td>    
+        </q-td>     
+          
+        </q-tr>
+      </template>
+        
       </q-table>
     </div>
 </div>
@@ -80,10 +130,11 @@ export default {
     data () {
     return {
       filter: '',
+      visibleColumns: ['uid', 'email', 'username', 'acciones'],
       columns: [
         {
-          name: 'email',
-          required: true,
+          name: 'email', icon: 'email',
+          // required: true,
           label: 'Email',
           align: 'left',
           field: row => row.email,
@@ -91,9 +142,9 @@ export default {
           sortable: true,
           classes: 'ellipsis', style: 'width: 80px;'
         },
-        { name: 'uid', align: 'center', label: 'UID', field: 'uid', sortable: true },
-        { name: 'username', align: 'center', label: 'N-Usuario', field: 'username', sortable: true },
-        { name: 'acciones', align: 'center', label: 'Acciones', field: 'acciones' }
+        { name: 'uid', icon: 'fingerprint', align: 'center', label: 'UID', field: 'uid', sortable: true },
+        { name: 'username', icon: 'supervisor_account',  align: 'center', label: 'N-Usuario', field: 'username', sortable: true },
+        { name: 'acciones', icon: 'dashboard', align: 'center', label: 'Acciones', field: 'acciones', sortable: false,  classes: 'ellipsis', style: 'width: 70px;'}
       ],
       users: [],
       loading: false
