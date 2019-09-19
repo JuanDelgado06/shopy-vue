@@ -1,7 +1,7 @@
 <template>
-<div id="q-app"> 
-<AdminUsersDialog />
-  <div >
+<div> 
+  <AdminUsersDialog />
+  <div class="table-container">
       <q-table
         title="Treats"
         :data="users"
@@ -20,10 +20,10 @@
           <q-space ></q-space>
   
           <div v-if="$q.screen.gt.xs" class="col">
-            <q-toggle v-model="visibleColumns" val="email" label="Email" color="primary" ></q-toggle>
-            <q-toggle v-model="visibleColumns" val="uid" label="UID" ></q-toggle>
-            <q-toggle v-model="visibleColumns" val="username" label="Usuario" ></q-toggle>
-            <q-toggle v-model="visibleColumns" val="acciones" label="Acciones" ></q-toggle>
+            <q-toggle v-model="visibleColumns"  checked-icon="check" unchecked-icon="clear" val="email" label="Email" color="primary" ></q-toggle>
+            <q-toggle v-model="visibleColumns"  checked-icon="check" unchecked-icon="clear" val="uid" label="UID" ></q-toggle>
+            <q-toggle v-model="visibleColumns"  checked-icon="check" unchecked-icon="clear" val="username" label="Usuario" ></q-toggle>
+            <q-toggle v-model="visibleColumns"  checked-icon="check" unchecked-icon="clear" val="acciones" label="Acciones" ></q-toggle>
           </div>
           <q-select
             v-else
@@ -129,6 +129,7 @@ export default {
     components: { AdminUsersDialog },
     data () {
     return {
+      prompt: false,
       filter: '',
       visibleColumns: ['uid', 'email', 'username', 'acciones'],
       columns: [
@@ -167,10 +168,20 @@ export default {
   },
   methods: {
       editUser (user) {
-
+          this.prompt = true
+          this.$store.commit('toggleUserDialog', {editMode: true, user})
       },
       removeUser (user) {
-
+        db.collection('users').doc(user.uid).delete().then((  )=> {
+            this.$q.notify({
+                  color: 'primary', textColor: 'white',
+                  icon: 'fas fa-broom',
+                  position: 'bottom-right',
+                  timeout: '2500',
+                  message: 'Usuario Eliminado',
+                  actions: [{ icon: 'close', color: 'white' }]
+            })            
+        })
       }
   },
   computed: {
@@ -202,11 +213,13 @@ export default {
     .subtitle {
         margin: 0;
     }
+    .table-container {
+      margin-top: 2rem;
+    }
     .table-master {
         // width: 100%;
         background: #000f14;
         border-radius: 10px;
-        margin-top: 40px;
     }
     .table-card {
         margin: 5px;

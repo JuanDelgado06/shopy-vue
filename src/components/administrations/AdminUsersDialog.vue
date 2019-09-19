@@ -76,6 +76,7 @@ export default {
             })
             this.userForEdit.email = ''
             this.userForEdit.username = ''
+            this.prompt = false
         },
         update() {
             const user = Object.assign({}, this.userForEdit)
@@ -88,6 +89,9 @@ export default {
                 })
                 this.close()
             } )
+            this.userForEdit.email = ''
+            this.userForEdit.username = ''
+            this.prompt = false
         }
     },
     computed: {
