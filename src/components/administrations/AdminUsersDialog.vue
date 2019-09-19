@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="center-item">
-            <q-btn @click="prompt = true" 
+            <q-btn @click="jeo" 
             class="btn-add shadow-17" icon="add"
             ></q-btn>
         </div>
@@ -21,6 +21,13 @@
                 </q-card-section>
                 <q-card-section>
                     <q-input dense v-model="userForEdit.username" label="Nombre de Usuario" dark>
+                        <template v-slot:append>
+                            <q-icon name="fas fa-user-shield q-icon" />
+                        </template>   
+                    </q-input>
+                </q-card-section>
+                <q-card-section>
+                    <q-input dense v-model="userForEdit.role" label="Rol del Usuario" dark>
                         <template v-slot:append>
                             <q-icon name="fas fa-user-shield q-icon" />
                         </template>   
@@ -57,40 +64,50 @@ export default {
                 user: {
                     uid: null,
                     email: '',
+                    role: '',
                     username: ''
                 }
             })
         },
+        jeo () {
+            this.prompt = true
+        },
         add () {
             this.userForEdit.uid = faker.random.alphaNumeric(16)
-            this.userForEdit.role = 'customer'
+            // this.userForEdit.role = 'customer'
             const user = Object.assign({}, this.userForEdit)
             db.collection('users').doc(this.userForEdit.uid).set(user).then(() => {
-                this.$store.commit('setAlertMessage', {
-                    show: true,
-                    type: 'success',
-                    message: 'Se ha guardado correctamente',
-                    timeout: 5000
-                })
+            this.$q.notify({
+                  color: 'primary', textColor: 'white',
+                  icon: 'fas fa-broom',
+                  position: 'bottom-right',
+                  timeout: '2500',
+                  message: 'Usuario Guardado',
+                  actions: [{ icon: 'close', color: 'white' }]
+            })          
                 this.close()
             })
             this.userForEdit.email = ''
             this.userForEdit.username = ''
+            this.userForEdit.role = ''
             this.prompt = false
         },
         update() {
             const user = Object.assign({}, this.userForEdit)
             db.collection('users').doc(user.uid).update(user).then( () => {
-                this.$store.commit('setAlertMessage', {
-                    show: true,
-                    type: 'success',
-                    message: 'Se ha actualizado correctamente',
-                    timeout: 5000
-                })
+                this.$q.notify({
+                    color: 'primary', textColor: 'white',
+                    icon: 'fas fa-broom',
+                    position: 'bottom-right',
+                    timeout: '2500',
+                    message: 'Usuario Actualizado',
+                    actions: [{ icon: 'close', color: 'white' }]
+                })          
                 this.close()
             } )
             this.userForEdit.email = ''
             this.userForEdit.username = ''
+            this.userForEdit.role = ''
             this.prompt = false
         }
     },
