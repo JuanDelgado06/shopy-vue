@@ -41,6 +41,11 @@ const router =  new Router({
           path: 'users',
           component: () => import('./components/administrations/AdminUsers'),
           meta: { title: 'Administrar Usuarios'}
+        },
+        {
+          path: 'products',
+          component: () => import('./components/administrations/AdminProducts'),
+          meta: { title: 'Administrar Productos'}
         }
       ]
     },

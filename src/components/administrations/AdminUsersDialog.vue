@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="center-item">
-            <q-btn @click="jeo" 
+            <q-btn @click="prompt = true" 
             class="btn-add shadow-17" icon="add"
             ></q-btn>
         </div>

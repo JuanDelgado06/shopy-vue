@@ -4,6 +4,7 @@ Vue.use(Vuex)
 
 import authModule from '@/modules/auth'
 import usersModule from '@/modules/users'
+import productsModule from '@/modules/products'
 
 export default new Vuex.Store({
     state: {
@@ -32,6 +33,7 @@ export default new Vuex.Store({
     },
     modules: {
         authModule,
-        usersModule
+        usersModule,
+        productsModule
     }
 })

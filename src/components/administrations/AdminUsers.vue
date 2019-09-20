@@ -166,7 +166,7 @@ export default {
         { name: 'acciones', icon: 'dashboard', align: 'center', label: 'Acciones', field: 'acciones', sortable: false,  classes: 'ellipsis', style: 'width: 70px;'}
       ],
       users: [],
-      loading: false
+      loading: true
     }
   },
   mounted() {
