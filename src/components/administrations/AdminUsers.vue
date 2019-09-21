@@ -88,7 +88,7 @@
             @click="props.toggleFullscreen"
             class="q-ml-md"
           ></q-btn>
-          <q-input outlined dense debounce="300" v-model="filter" placeholder="Buscar" dark> 
+          <q-input outlined dense debounce="300" v-model="filter" placeholder="Buscar Usuarios" dark> 
                 <template v-slot:append>
                     <q-icon name="search" />
                 </template>

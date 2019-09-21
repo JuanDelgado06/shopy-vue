@@ -6,16 +6,27 @@
 
                 <div class="admin-container">
                     <q-list class="menu-admin">
-                        <q-item 
+                        <!-- <q-item 
                                 v-for="(item, index) in items" :key="index" :to="item.to"
                                 clickable class="item-menu"
                             >
-                                <!-- v-ripple :active="link === 'inbox'" @click="link = 'inbox'" -->
                                 <q-item-section avatar>
                                     <q-icon color="primary" :name="item.icon" />
                                 </q-item-section>
                                 <q-item-section> {{ item.title }} </q-item-section>
-                        </q-item>                
+                        </q-item>                 -->
+                        <q-item class="item-menu" to="/admin/users">
+                            <q-item-section avatar>
+                                    <q-icon color="primary" name="fas fa-user-shield q-icon" />
+                                </q-item-section>
+                            <q-item-section> Usuarios </q-item-section>
+                        </q-item>
+                        <q-item class="item-menu" to="/admin/products">
+                            <q-item-section avatar>
+                                    <q-icon color="primary" name="fas fa-store" />
+                                </q-item-section>
+                            <q-item-section> Productos </q-item-section>
+                        </q-item>
                     </q-list>
                     <q-page>
                         <router-view/>
@@ -57,4 +68,5 @@ export default {
         display: flex;
         justify-content: space-around;
     }
+    
 </style>

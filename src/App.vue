@@ -49,4 +49,7 @@ export default {
   .all-view {
     min-height: 100vh;
   }
+  .q-router-link--exact-active  {
+        border-bottom: 3px solid;
+    }
 </style>

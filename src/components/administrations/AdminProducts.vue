@@ -1,11 +1,11 @@
 <template>
     <div>
-        <!-- MODULO PARA LA VENTANA MODAL-->
-        <div class="center-item">
+        <div class="center-item m-top-1">
             <q-btn @click="prompt = true" 
             class="btn-add shadow-17" icon="add"
             ></q-btn>
             </div>
+        <!-- MODULO PARA LA VENTANA MODAL-->
             <q-dialog v-model="prompt"  persistent transition-show="scale"  transition-hide="rotate">
                     <q-card class="modal">
                     <q-card-section>
@@ -40,6 +40,7 @@
                             label="Custom header" 
                             accept=".jpg, .png, image/*"
                             dark text-color="black" color="accent"
+                            style="max-width: 250px"
                         >
                         <template v-slot:header="scope">
                             <div class="row no-wrap items-center q-pa-sm q-gutter-xs">
@@ -132,7 +133,7 @@
                     @click="props.toggleFullscreen"
                     class="q-ml-md"
                 ></q-btn>
-                <q-input outlined dense debounce="300" v-model="filter" placeholder="Buscar" dark> 
+                <q-input outlined dense debounce="300" v-model="filter" placeholder="Buscar productos" dark> 
                         <template v-slot:append>
                             <q-icon name="search" />
                         </template>
@@ -360,11 +361,7 @@ export default {
             border: 1px solid $c-color5;
         }
         @media screen and (min-width: 500px) {
-            width: 25%;
-            font-size: 1rem;
-        }
-        @media screen and (min-width: 764px) {
-            width: 40%;
+            width: 20%;
             font-size: 1rem;
         }
     }

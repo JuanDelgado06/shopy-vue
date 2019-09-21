@@ -38,12 +38,12 @@ const router =  new Router({
       meta: { Auth: true, title: 'Administracion', role: 'admin' },
       children: [
         {
-          path: 'users',
+          path: '/admin/users',
           component: () => import('./components/administrations/AdminUsers'),
           meta: { title: 'Administrar Usuarios'}
         },
         {
-          path: 'products',
+          path: '/admin/products',
           component: () => import('./components/administrations/AdminProducts'),
           meta: { title: 'Administrar Productos'}
         }
