@@ -1,21 +1,21 @@
 <template>
-  <div>
-    <div>
+  <div :class="imageUrl ? 'modal-image' : '' ">
+    <div >
       <img
         :src="imageUrl"
         ref="imageUrl"
-        height="150"
         @click="onPickFile"
         style="cursor: pointer;"
       />
     </div>
-    <div>
-      <v-btn raised @click="onPickFile" v-if="!imageUrl">
-        {{ $t('admin.productsTable.select_image') }}
-      </v-btn>
-      <v-btn raised class="error" @click="removeFile" v-else>
-        {{ $t('admin.productsTable.remove') }}
-      </v-btn>
+    <div align="right">
+      <q-btn  push color="accent" text-color="black" raised @click="onPickFile" v-if="!imageUrl" >
+        Seleccionar Imagen
+      </q-btn>
+      <q-btn 
+          push color="negative" raised icon="delete"
+          class="pointer" @click="removeFile" v-else>
+      </q-btn>
       <input
         type="file"
         ref="image"
@@ -94,9 +94,25 @@
   }
 </script>
 
-<style scoped>
+<style lang="scss" scope>
+@import '@/styles/master';
   input[type=file] {
     position: absolute;
     left: -99999px;
+  }
+  .modal-image {
+    width: 75%;
+    @media screen and (min-width: 600px) {
+      width: 65%; 
+    }
+    // border: 2px solid $c-color6;
+    // border-radius: .8rem;
+    // padding: 2%;
+    // background: $c-color4;
+  }
+  img {
+    width: 100%;
+    max-width: 100%;
+    border-radius: .8rem;
   }
 </style>

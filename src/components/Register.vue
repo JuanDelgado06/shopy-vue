@@ -24,7 +24,7 @@ export default {
                 const data = {  
                     uid: userRegistered.user.uid,
                     email: user.email,
-                    role: 'customer'
+                    role: 'customer',
                 }
                 //  ESTA FORMA TAMBIEN ES CORRECTA PARA INGRESAR EL USUARIO A LA BASE DE DATOS
                 // let uid = userRegistered.user.uid

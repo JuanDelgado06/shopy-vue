@@ -21,48 +21,23 @@
                     </q-card-section>
                     <q-card-section>
                         <q-input type="number" dense v-model="productForEdit.price" label="Precio del Producto" dark>
-                            <!-- <template v-slot:append>
-                                <q-icon name="fas fa-user-shield q-icon" />
-                            </template>    -->
                         </q-input>
                     </q-card-section>
-       
+        
                     
                     <q-card-section align="center">
                         <!-- MODULO PARA SUBIR ARCHIVOS -->
-                        <q-uploader
-                            label="Custom header" 
-                            accept=".jpg, .png, image/*"
-                            dark text-color="black" color="accent"
-                            style="max-width: 250px"
+                        <a
+                            v-if="productForEdit.url"
+                            :href="productForEdit.url"
+                            target="_blank"
                         >
-                        <template v-slot:header="scope">
-                            <div class="row no-wrap items-center q-pa-sm q-gutter-xs">
-                                <q-btn v-if="scope.queuedFiles.length > 0" icon="clear_all" @click="scope.removeQueuedFiles" round dense flat >
-                                <q-tooltip>Descartar Imagen</q-tooltip>
-                                </q-btn>
-                                <q-btn v-if="scope.uploadedFiles.length > 0" icon="done_all" @click="scope.removeUploadedFiles" round dense flat >
-                                <q-tooltip>Remove Uploaded Files</q-tooltip>
-                                </q-btn>
-                                <q-spinner v-if="scope.isUploading" class="q-uploader__spinner" ></q-spinner>
-                                <div class="col">
-                                <div class="q-uploader__title">Sube tus imagenes</div>
-                                <div class="q-uploader__subtitle">{{ scope.uploadSizeLabel }} / {{ scope.uploadProgressLabel }}</div>
-                                </div>
-                                <q-btn v-if="scope.canAddFiles" type="a" icon="add_box" round dense flat>
-                                <q-uploader-add-trigger ></q-uploader-add-trigger>
-                                <q-tooltip>Añadir imagen</q-tooltip>
-                                </q-btn>
-                                <q-btn v-if="scope.canUpload" icon="cloud_upload" @click="add" round dense flat >
-                                <q-tooltip>Subir imagen</q-tooltip>
-                                </q-btn>
-                    
-                                <q-btn v-if="scope.isUploading" icon="clear" @click="scope.abort" round dense flat >
-                                <q-tooltip>Cancelar</q-tooltip>
-                                </q-btn>
-                            </div>
-                        </template>
-                        </q-uploader>
+                            Abrir Imagen
+                        </a>                        
+                        <file-input
+                            accept="image/*"
+                            @input="getUploadedFile"
+                        />
                         <!-- FIN MODULO PARA SUBIR ARCHIVOS -->
                     </q-card-section>
                                 
@@ -143,15 +118,6 @@
                 
                 <template v-slot:body="props"> 
                 <q-tr :props="props">
-                <q-td key="id" :props="props">
-                    <q-scroll-area
-                        v-if="$q.screen.lt.sm"
-                        horizontal style="height: 50px; width: 100px;"
-                        :thumb-style="thumbStyle" :content-style="contentStyle" :content-active-style="contentActiveStyle" >          
-                            <div class="text-wrap">{{ props.row.id }}</div>
-                    </q-scroll-area>   
-                    <div class="text-wrap" v-else>{{ props.row.id }}</div>
-                </q-td>
                 
                 <q-td key="name" :props="props">
                     <q-scroll-area
@@ -162,6 +128,16 @@
                         <div class="text-pre-wrap" >{{ props.row.name }}</div> 
                     </q-scroll-area>
                     <div class="text-pre-wrap" v-else>{{ props.row.name }}</div> 
+                </q-td>
+                
+                <q-td key="id" :props="props">
+                    <q-scroll-area
+                        v-if="$q.screen.lt.sm"
+                        horizontal style="height: 50px; width: 100px;"
+                        :thumb-style="thumbStyle" :content-style="contentStyle" :content-active-style="contentActiveStyle" >          
+                            <div class="text-wrap">{{ props.row.id.substr(0,6) }}</div>
+                    </q-scroll-area>   
+                    <div class="text-wrap" v-else>{{ props.row.id.substr(0,10) }}</div>
                 </q-td>
                 
                 <q-td key="price" :props="props">
@@ -191,17 +167,19 @@
 import {db} from '@/main'
 import * as faker from 'faker'
 import {mapGetters} from 'vuex'
+import FileInput from "@/components/helpers/FileInput";
 export default {
     name: 'AdminProducts',
+    components: {FileInput},
     data () {
     return {
       prompt: false,
       filter: '',
-      visibleColumns: ['acciones', 'name', 'id', 'price'],
+      visibleColumns: ['acciones', 'name', 'price'],
       columns: [
         { name: 'name', icon: 'card_travel', label: 'Nombre', align: 'left', field: row => row.name, format: val => `${val}`, sortable: true, classes: 'ellipsis', style: 'width: 80px;' },
         { name: 'id', icon: 'fingerprint',  align: 'center', label: 'ID', field: 'id', sortable: true },
-        { name: 'price', icon: 'attach_money', align: 'center', label: 'Precio', field: 'price', sortable: true, classes: 'ellipsis', style: 'width: 80px;' },
+        { name: 'price', icon: 'attach_money', align: 'center', label: 'Precio', field: 'price', sortable: true, classes: 'ellipsis'},
         { name: 'acciones', icon: 'dashboard', align: 'center', label: 'Acciones', field: 'acciones', sortable: false,  classes: 'ellipsis', style: 'width: 70px;'}
       ],
       products: [],
@@ -214,13 +192,13 @@ export default {
           this.products = []
           snapshot.forEach(SnapProduct => {
               const product =  SnapProduct.data()
-              console.log(product);
+            //   console.log(product);
               this.products.push({
                   id: product.id,
                   name: product.name,
                   price: product.price,
                   url: product.url ||  '',
-                  file_id: product.file_id
+                  file_id: product.file_id || ''
               })
           })
           this.loading = false
@@ -229,18 +207,15 @@ export default {
   methods: {
       //METODOS PARA LA TABLA DE PRODUCTOS
         editProduct (product) {
-            this.$store().commit('toggleProductsDialog', {editMode: true, product})
+            this.prompt = true
+            this.$store.commit('toggleProductsDialog', {editMode: true, product})
         },
         removeProduct (product) {
             db.collection('products').doc(product.id).delete().then(() => {
                 if (product.url) {
                     this.$store.dispatch('removeFile', product)
                 }   
-                 this.$q.notify({
-                    color: 'accent', textColor: 'black', icon: 'far fa-laugh-wink',
-                    position: 'bottom-right', timeout: '2500', message: 'Producto Eliminado',
-                    actions: [{ icon: 'close', color: 'black' }]
-                })    
+                 this._alertAndClose('Eleminado ')
             })
         },
       //METODOS PARA LA VENTANA MODAL
@@ -261,12 +236,12 @@ export default {
             const product = Object.assign({}, this.productForEdit)
             product.createdAt = Date.now()
             db.collection('products').doc(this.productForEdit.id).set(product).then(() => {
-                if (this.image) {
+                if (this.image) {   
                     this.$store.dispatch('pushFileToStorage', {fileToUpload: this.image, id: product.id}).then(() => {
-                        this._alertAndClose('saved')
+                        this._alertAndClose('Añadido')
                     })
                 } else {
-                    this._alertAndClose('saved')
+                    this._alertAndClose('Añadido')
                 }
             })
         },
@@ -276,25 +251,26 @@ export default {
                 if (this.image) {
                     if (product.url) {
                         this.$store.dispatch('removeFile', product).then(() => {
-                            this.$store.dispatch('updateDeleteProduct', product.id)
+                            this.$store.dispatch('updateDeletedProduct', product.id)
                         })
                     }
 
                 this.$store.dispatch('pushFileToStorage', {fileToUpload: this.image, id: product.id}).then(() => {
-                    this._alertAndClose('updated')
+                    this._alertAndClose('Actualizado')
                 })
                 } else  {
-                    this._alertAndClose('saved')
+                    this._alertAndClose('Actualizado')
                 }
             })
+            this.prompt = false
         },
-        getUploaderFile (e) {
-            this.image = e
+        getUploadedFile (e) {
+            this.image = e;
         },
         _alertAndClose (action) {
              this.$q.notify({
                   color: 'accent', textColor: 'black', icon: 'far fa-laugh-wink',
-                  position: 'bottom-right', timeout: '2500', message: 'Usuario Actualizado',
+                  position: 'bottom-right', timeout: '2500', message:  `Producto ${action}`,
                   actions: [{ icon: 'close', color: 'black' }]
             })    
             this.close()
