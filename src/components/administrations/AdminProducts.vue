@@ -26,17 +26,11 @@
                             </template>    -->
                         </q-input>
                     </q-card-section>
-                    <q-card-section>
-                        <a v-if="productForEdit.url"
-                            :href="productForEdit.url" target="_blank">
-                            Abrir Archivo
-                        </a>
-                    </q-card-section>
+       
                     
                     <q-card-section align="center">
                         <!-- MODULO PARA SUBIR ARCHIVOS -->
                         <q-uploader
-                            url="http://localhost:4444/upload"
                             label="Custom header" 
                             accept=".jpg, .png, image/*"
                             dark text-color="black" color="accent"
@@ -59,7 +53,7 @@
                                 <q-uploader-add-trigger ></q-uploader-add-trigger>
                                 <q-tooltip>Añadir imagen</q-tooltip>
                                 </q-btn>
-                                <q-btn v-if="scope.canUpload" icon="cloud_upload" @click="scope.upload" round dense flat >
+                                <q-btn v-if="scope.canUpload" icon="cloud_upload" @click="add" round dense flat >
                                 <q-tooltip>Subir imagen</q-tooltip>
                                 </q-btn>
                     
@@ -225,7 +219,7 @@ export default {
                   id: product.id,
                   name: product.name,
                   price: product.price,
-                  url: product.url || '',
+                  url: product.url ||  '',
                   file_id: product.file_id
               })
           })

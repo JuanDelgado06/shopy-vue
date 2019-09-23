@@ -40,8 +40,8 @@ export default {
                 }
             )
         },
-        removeFile ({commit}, productData) {
-            return firebase.storage().ref().child(`products/${productData.file_id}`).delete()
+        removeFile ({commit}, product) {
+            return firebase.storage().ref().child(`products/${product.file_id}`).delete()
         },
         updateDeletedProduct ({commit}, id) {
             let product = firebase.firestore().collection(`products`).doc(id)
