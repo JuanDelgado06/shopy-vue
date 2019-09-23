@@ -5,6 +5,7 @@
         <div v-if="$store.state.loaded">
             <GuestNavigation v-if="role === 'guest' "/>
             <AdminNavigation v-if="role === 'admin' "/>
+            <CustomerNavigation v-if="role === 'customer' "/>
             <!-- <brackets /> -->
             <router-view/>
             <Footer />  
@@ -26,6 +27,7 @@
 <script>
 import GuestNavigation from './components/navigation/Guest'
 import AdminNavigation from './components/navigation/Admin'
+import CustomerNavigation from './components/navigation/Customer'
 import Footer from './components/Footer'
 import {mapGetters} from 'vuex'
 export default {
@@ -33,6 +35,7 @@ export default {
   components : {
     GuestNavigation,
     AdminNavigation,
+    CustomerNavigation,
     Footer
   },
   computed: {

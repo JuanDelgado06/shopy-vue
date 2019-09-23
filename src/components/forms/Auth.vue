@@ -14,7 +14,7 @@
         name="email"
         :rules="emailRules"
         />
-
+        
       <q-input v-model.trim="$v.password.$model"
       outlined :type=" isPwd ? 'password' : 'text' " 
       label="Ingrasa la Contraseña" 
@@ -121,18 +121,19 @@ export default {
       this.$v.$touch()
         if (this.$v.$invalid) {
           // eslint-disable-next-line
-          console.log('Error con el formulario');
+          // console.log('Error con el formulario');
           this.submitStatus = 'ERROR'
         } 
         else {
           // eslint-disable-next-line
-          console.log('enviado');
+          // console.log('enviado');
           this.submitStatus = 'OK'
           this.$emit('process', {email: this.email, password: this.password})
         }
       },
     onReset () {
       this.email = ''
+      this.username = ''
       this.password = ''
       this.password_confirmation =  ''
       this.$q.notify({

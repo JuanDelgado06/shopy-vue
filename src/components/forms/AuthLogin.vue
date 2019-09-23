@@ -91,7 +91,6 @@ export default {
   methods: {
     submit () {
       this.$v.$touch()
-        console.log('enviado');
           this.submitStatus = 'OK'
           this.$emit('process', {email: this.email, password: this.password})
         // if (this.$v.$invalid) {

@@ -11,11 +11,7 @@
           icon="menu"
           v-if="$mq.resize && $mq.below('629px')"
         />
-      <!-- <div class="f-center "  v-if="$q.platform.is.mobile">
-        <q-item to="/">
-          <q-item-label class="t-logo t3">ShopyVue</q-item-label>
-        </q-item>
-      </div> -->
+
       <q-toolbar-title v-if="$mq.resize && $mq.below('629px')" align="center">
           <q-item-label class="t-logo-desktop">Admin-Vue</q-item-label>
         </q-toolbar-title>
@@ -29,7 +25,7 @@
         <div v-if="$mq.resize && $mq.above('630px')">
             <q-btn size="md" outline color="accent" class="item-nav-desktop" label="Administrar"  exact to="/admin"/>
             <q-btn size="md" outline color="accent" class="item-nav-desktop q-ml-sm" label="Tienda"  exact to="/register"/>
-            <q-btn  @click="logout" size="md" outline color="primary" class="item-nav-desktop q-ml-sm" icon="fas fa-power-off" label="Cerrar Sesión"/>
+            <q-btn  @click="logout" size="md" outline color="primary" class="item-nav-desktop q-ml-sm" icon="fas fa-power-off"/>
         </div>
 
         <div v-if="$mq.resize && $mq.below('629px')">

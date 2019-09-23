@@ -26,7 +26,7 @@ export default {
                     email: user.email,
                     role: 'customer',
                 }
-                //  ESTA FORMA TAMBIEN ES CORRECTA PARA INGRESAR EL USUARIO A LA BASE DE DATOS
+               //  ESTA FORMA TAMBIEN ES CORRECTA PARA INGRESAR EL USUARIO A LA BASE DE DATOS
                 // let uid = userRegistered.user.uid
                 // console.log(uid);
                 db.collection("users").doc(data.uid).set(data) .then(() => {
@@ -74,5 +74,4 @@ export default {
         border-radius: 5px;
         color: #f2f2f2;
     }
-
 </style>
